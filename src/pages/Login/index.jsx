@@ -1,20 +1,31 @@
 import styles from "./Login.module.css";
-import React, { useState } from "react";
-import { useSessaoUsuarioContext } from "../../contexto/SessaoUsuario";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import http from "../../http";
+import { ArmazenadorToken } from "../../utils/ArmazenadorTokens";
+import { AuthContext } from "../../contexto/AuthProvider";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const {setAuth} = useContext(AuthContext)
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
-  const { login } = useSessaoUsuarioContext();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(email, senha);
-    navigate("/calendar")
+    http
+      .post("/auth/login", {
+        email,
+        senha,
+      })
+      .then((resposta) => {
+        ArmazenadorToken.definirTokens(resposta.data.accessToken);
+        const token = ArmazenadorToken.accessToken
+        setAuth({token, email, senha})
+      })
+      .catch((erro) => console.error(erro));
   };
+  navigate("/calendar");
 
   return (
     <div className={styles.login}>

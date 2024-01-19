@@ -4,7 +4,6 @@ import http from "../../http";
 
 const Home = () => {
   const [usuario, setUsuario] = useState(null);
-  console.log(usuario);
 
   useEffect(() => {
     http
@@ -15,7 +14,7 @@ const Home = () => {
       })
       .then((resposta) => setUsuario(resposta.data))
       .catch((erro) => console.error(erro));
-  }, [ArmazenadorToken.accessToken]);
+  }, []);
 
   return (
     <div>
