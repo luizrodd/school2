@@ -1,18 +1,18 @@
 import styles from "./Login.module.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import http from "../../http";
 import { ArmazenadorToken } from "../../utils/ArmazenadorTokens";
-import { AuthContext } from "../../contexto/AuthProvider";
-
+import useAuth from "../../hooks/useAuth";
 const Login = () => {
-  const {setAuth} = useContext(AuthContext)
+  const {  setIsAuthenticated,  setLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     http
       .post("/auth/login", {
         email,
@@ -20,12 +20,12 @@ const Login = () => {
       })
       .then((resposta) => {
         ArmazenadorToken.definirTokens(resposta.data.accessToken);
-        const token = ArmazenadorToken.accessToken
-        setAuth({token, email, senha})
+        setIsAuthenticated(true);
+        setLoading(false);
       })
       .catch((erro) => console.error(erro));
+    navigate("/calendar");
   };
-  navigate("/calendar");
 
   return (
     <div className={styles.login}>

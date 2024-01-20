@@ -18,7 +18,6 @@ const Calendar = () => {
       })
       .then((resposta) => {
         setUsuario(resposta.data);
-        console.log(usuario);
 
         const eventos = usuario?.Horarios.map((horario) => {
           const isMonday = horario.Dia.dia === "Segunda-Feira";
@@ -39,7 +38,6 @@ const Calendar = () => {
             isSunday && 7,
           ].filter(Boolean); // Filtra valores nulos (dias não selecionados)
 
-          console.log(daysOfWeek);
 
           return {
             title: `${horario.Disciplina.nome} - ${horario.Series.serie} - ${horario.Turma.turma} - ${horario.Dia.dia} - ${horario.HoraAula.hora} - ${horario.Disciplina.nome}`,
@@ -49,7 +47,6 @@ const Calendar = () => {
           };
         });
 
-        console.log(eventos);
         setEvents(eventos || []);
       })
       .catch((erro) => console.error(erro));
