@@ -6,13 +6,13 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { setIsAuthenticated, setLoading } = useAuth();
+  const { setIsAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
     http
       .post("/auth/login", {
         email,
@@ -20,12 +20,10 @@ const Login = () => {
       })
       .then((resposta) => {
         ArmazenadorToken.definirTokens(resposta.data.accessToken);
-        setLoading(false);
-        navigate("/calendar")
         setIsAuthenticated(true);
+        navigate("/calendar")
       })
       .catch((erro) => {
-        setLoading(false);
         console.error(erro);
       });
   };
@@ -55,6 +53,7 @@ const Login = () => {
         onClick={() => {
           ArmazenadorToken.efetuarLogout();
           setIsAuthenticated(false);
+          navigate("/")
         }}
       >
         Logout

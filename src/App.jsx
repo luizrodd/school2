@@ -3,11 +3,15 @@ import Calendar from "./pages/Calendar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { Navigate } from "react-router-dom";
-import  useAuth  from "./hooks/useAuth";
-
+import useAuth from "./hooks/useAuth";
+import { useEffect } from "react";
 
 function App() {
-  const { isAuthenticated } = useAuth();  
+  const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    console.log("is:", isAuthenticated);
+  }, [isAuthenticated]);
+
   return (
     <BrowserRouter>
       <Routes>
