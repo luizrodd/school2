@@ -9,6 +9,7 @@ const Calendar = () => {
   const [usuario, setUsuario] = useState(null);
   const [events, setEvents] = useState([]);
 
+
   useEffect(() => {
     http
       .get("/perfil", {
@@ -51,6 +52,7 @@ const Calendar = () => {
       })
       .catch((erro) => console.error(erro));
   }, []);
+
 
   return (
     <div className="calendario-container">

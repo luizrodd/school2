@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { ArmazenadorToken } from '../utils/ArmazenadorTokens';
+import { useEffect, useState } from "react";
+import { ArmazenadorToken } from "../utils/ArmazenadorTokens";
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
+  const token = ArmazenadorToken.accessToken;
 
   useEffect(() => {
-    const token = ArmazenadorToken.accessToken;
     if (token) {
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [token, isAuthenticated]);
 
   return { isAuthenticated, setIsAuthenticated, loading, setLoading };
 };

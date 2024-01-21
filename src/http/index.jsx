@@ -8,7 +8,6 @@ http.interceptors.request.use(function (config) {
   const token = ArmazenadorToken.accessToken
   if (token) {
     config.headers.Authorization = `${token}`
-    console.log('Token foi adicionado ao cabeçalho')
   }
   return config;
 }, function (error) {
