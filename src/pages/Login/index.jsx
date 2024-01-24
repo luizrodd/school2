@@ -1,31 +1,23 @@
 import styles from "./Login.module.css";
-import {  useState } from "react";
+import { useState } from "react";
 import http from "../../http";
 import { ArmazenadorToken } from "../../utils/ArmazenadorTokens";
-import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../../context/AuthContext";
 
 const Login = () => {
-  const { setIsAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const { authenticated, handleLogin, handleLogout } = useContext(Context);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const navigate = useNavigate();
+
+  console.log("authenticated", authenticated);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    http
-      .post("/auth/login", {
-        email,
-        senha,
-      })
-      .then((resposta) => {
-        ArmazenadorToken.definirTokens(resposta.data.accessToken);
-        setIsAuthenticated(true);
-        navigate("/calendar")
-      })
-      .catch((erro) => {
-        console.error(erro);
-      });
+    handleLogin(email, senha);
+    navigate("/calendar");
   };
 
   return (
@@ -49,15 +41,7 @@ const Login = () => {
         <input type="submit" value="Login" />
       </form>
 
-      <button
-        onClick={() => {
-          ArmazenadorToken.efetuarLogout();
-          setIsAuthenticated(false);
-          navigate("/")
-        }}
-      >
-        Logout
-      </button>
+      <button onClick={() => {handleLogout}}>Logout</button>
     </div>
   );
 };

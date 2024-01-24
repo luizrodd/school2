@@ -4,55 +4,52 @@ import "./Calender.css";
 import { useEffect, useState } from "react";
 import { ArmazenadorToken } from "../../utils/ArmazenadorTokens";
 import http from "../../http";
-
+import api from "../../http";
+import { useContext } from "react";
+import { Context } from "../../context/AuthContext";
 const Calendar = () => {
-  const [usuario, setUsuario] = useState(null);
+  const { authenticated } = useContext(Context);
+  const [usuario, setUsuario] = useState();
   const [events, setEvents] = useState([]);
 
+  console.log(authenticated)
+  // useEffect(() => {
+  //   http
+  //     .get("/perfil")
+  //     .then((resposta) => {
+  //       setUsuario(resposta.data);
 
-  useEffect(() => {
-    http
-      .get("/perfil", {
-        headers: {
-          Authorization: `${ArmazenadorToken.accessToken}`,
-        },
-      })
-      .then((resposta) => {
-        setUsuario(resposta.data);
+  //       const eventos = usuario?.Horarios.map((horario) => {
+  //         const isMonday = horario.Dia.dia === "Segunda-Feira";
+  //         const isTuesday = horario.Dia.dia === "Terca-Feira";
+  //         const isWednesday = horario.Dia.dia === "Quarta-Feira";
+  //         const isThursday = horario.Dia.dia === "Quinta-Feira";
+  //         const isFriday = horario.Dia.dia === "Sexta-Feira";
+  //         const isSaturday = horario.Dia.dia === "Sábado";
+  //         const isSunday = horario.Dia.dia === "Domingo";
 
-        const eventos = usuario?.Horarios.map((horario) => {
-          const isMonday = horario.Dia.dia === "Segunda-Feira";
-          const isTuesday = horario.Dia.dia === "Terca-Feira";
-          const isWednesday = horario.Dia.dia === "Quarta-Feira";
-          const isThursday = horario.Dia.dia === "Quinta-Feira";
-          const isFriday = horario.Dia.dia === "Sexta-Feira";
-          const isSaturday = horario.Dia.dia === "Sábado";
-          const isSunday = horario.Dia.dia === "Domingo";
+  //         const daysOfWeek = [
+  //           isMonday && 1,
+  //           isTuesday && 2,
+  //           isWednesday && 3,
+  //           isThursday && 4,
+  //           isFriday && 5,
+  //           isSaturday && 6,
+  //           isSunday && 7,
+  //         ].filter(Boolean); // Filtra valores nulos (dias não selecionados)
 
-          const daysOfWeek = [
-            isMonday && 1,
-            isTuesday && 2,
-            isWednesday && 3,
-            isThursday && 4,
-            isFriday && 5,
-            isSaturday && 6,
-            isSunday && 7,
-          ].filter(Boolean); // Filtra valores nulos (dias não selecionados)
+  //         return {
+  //           title: `${horario.Disciplina.nome} - ${horario.Series.serie} - ${horario.Turma.turma} - ${horario.Dia.dia} - ${horario.HoraAula.hora} - ${horario.Disciplina.nome}`,
+  //           daysOfWeek,
+  //           startRecur: "2024-01-01",
+  //           endRecur: "2024-12-31",
+  //         };
+  //       });
 
-
-          return {
-            title: `${horario.Disciplina.nome} - ${horario.Series.serie} - ${horario.Turma.turma} - ${horario.Dia.dia} - ${horario.HoraAula.hora} - ${horario.Disciplina.nome}`,
-            daysOfWeek,
-            startRecur: "2024-01-01",
-            endRecur: "2024-12-31",
-          };
-        });
-
-        setEvents(eventos || []);
-      })
-      .catch((erro) => console.error(erro));
-  }, []);
-
+  //       setEvents(eventos || []);
+  //     })
+  //     .catch((erro) => console.error(erro));
+  // }, []);
 
   return (
     <div className="calendario-container">
