@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import http from "../http";
 import api from "../http";
 import { ArmazenadorToken } from "../utils/ArmazenadorTokens";
+import { useNavigate } from "react-router-dom";
 
 const Context = createContext();
 
@@ -32,6 +33,7 @@ function AuthProvider({ children }) {
       });
     setAuthenticated(true);
   }
+  
   async function handleLogout() {
     setAuthenticated(false);
     ArmazenadorToken.efetuarLogout();
@@ -43,7 +45,9 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <Context.Provider value={{ authenticated, handleLogin, handleLogout, loading }}>
+    <Context.Provider
+      value={{ authenticated, handleLogin, handleLogout, loading }}
+    >
       {children}
     </Context.Provider>
   );

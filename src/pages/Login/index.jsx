@@ -16,8 +16,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(email, senha);
-    navigate("/calendar");
+    handleLogin(email, senha)
+      .then(() => {
+        navigate("/calendar");
+      })
+      .catch((erro) => {
+        console.error(erro);
+      });
   };
 
   return (
@@ -41,7 +46,13 @@ const Login = () => {
         <input type="submit" value="Login" />
       </form>
 
-      <button onClick={() => {handleLogout}}>Logout</button>
+      <button
+        onClick={() => {
+          handleLogout();
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };
