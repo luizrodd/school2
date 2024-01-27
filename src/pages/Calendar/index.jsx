@@ -8,18 +8,17 @@ import api from "../../http";
 import { useContext } from "react";
 import { Context } from "../../context/AuthContext";
 const Calendar = () => {
-  const { authenticated } = useContext(Context);
-  const [usuario, setUsuario] = useState();
+  const { authenticated, handleLogout } = useContext(Context);
+  const [usuario, setUsuario] = useState([]);
   const [events, setEvents] = useState([]);
 
-  console.log(authenticated)
   useEffect(() => {
     http
       .get("/perfil")
       .then((resposta) => {
         setUsuario(resposta.data);
 
-        const eventos = usuario?.Horarios.map((horario) => {
+        const eventos = usuario.Horarios.map((horario) => {
           const isMonday = horario.Dia.dia === "Segunda-Feira";
           const isTuesday = horario.Dia.dia === "Terca-Feira";
           const isWednesday = horario.Dia.dia === "Quarta-Feira";
@@ -36,7 +35,7 @@ const Calendar = () => {
             isFriday && 5,
             isSaturday && 6,
             isSunday && 7,
-          ].filter(Boolean); // Filtra valores nulos (dias não selecionados)
+          ].filter(Boolean);
 
           return {
             title: `${horario.Disciplina.nome} - ${horario.Series.serie} - ${horario.Turma.turma} - ${horario.Dia.dia} - ${horario.HoraAula.hora} - ${horario.Disciplina.nome}`,
@@ -46,13 +45,15 @@ const Calendar = () => {
           };
         });
 
-        setEvents(eventos || []);
+        setEvents(eventos);
       })
       .catch((erro) => console.error(erro));
   }, []);
-  console.log(usuario)
+  console.log(usuario);
   return (
     <div className="calendario-container">
+      <h1>Olá, {usuario.usuario}</h1>
+      <button onClick={handleLogout}>Sair</button>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"

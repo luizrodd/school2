@@ -33,7 +33,7 @@ function AuthProvider({ children }) {
       });
     setAuthenticated(true);
   }
-  
+
   async function handleLogout() {
     setAuthenticated(false);
     ArmazenadorToken.efetuarLogout();

@@ -8,7 +8,7 @@ import { Context } from "../../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { authenticated, handleLogin, handleLogout } = useContext(Context);
+  const { authenticated, handleLogin } = useContext(Context);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -45,14 +45,6 @@ const Login = () => {
         />
         <input type="submit" value="Login" />
       </form>
-
-      <button
-        onClick={() => {
-          handleLogout();
-        }}
-      >
-        Logout
-      </button>
     </div>
   );
 };

@@ -1,5 +1,8 @@
 /* Login.module.css */
-
+.login h1{
+  text-align: center;
+  color: black;
+}
 .login {
     max-width: 400px;
     margin: 300px auto;
