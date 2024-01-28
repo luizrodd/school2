@@ -1,6 +1,5 @@
 import styles from "./Login.module.css";
 import { useState } from "react";
-import http from "../../http";
 import { ArmazenadorToken } from "../../utils/ArmazenadorTokens";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";

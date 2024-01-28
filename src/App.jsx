@@ -2,8 +2,6 @@ import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Calendar from "./pages/Calendar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "./context/AuthContext";
 import Register from "./pages/Register";

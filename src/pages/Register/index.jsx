@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import api from "../../http";
+import api from "../../http/api";
 import { useDisciplinas } from "../../hooks/useDisciplinas";
+
 const Register = () => {
+  const { disciplinas, loading, error } = useDisciplinas();
+
+
   const [usuario, setUsuario] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -12,15 +16,23 @@ const Register = () => {
   const [horaAula, setHoraAula] = useState("");
   const [dia, setDia] = useState("");
 
-  const [disciplinas, setDisciplinas] = useState([]);
   const [turmas, setTurmas] = useState([]);
   const [series, setSeries] = useState([]);
   const [horaAulas, setHoraAulas] = useState([]);
   const [dias, setDias] = useState([]);
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+  if (error) {
+    return <p>{error}</p>
+  }
+
   return (
     <div>
       <h1>Register</h1>
@@ -35,8 +47,8 @@ const Register = () => {
           <option value="">Selecione uma disciplina</option>
           {disciplinas.map((disciplina) => (
             <option
+              key={disciplina.id}
               value={disciplina.id}
-              onChange={setDisciplina(disciplina.id)}
             >
               {disciplina.nome}
             </option>

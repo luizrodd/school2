@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import http from "../http";
-import api from "../http";
+import api from "../http/api";
 import { ArmazenadorToken } from "../utils/ArmazenadorTokens";
 import { useNavigate } from "react-router-dom";
 
