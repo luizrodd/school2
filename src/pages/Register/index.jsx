@@ -2,10 +2,17 @@ import { useEffect } from "react";
 import { useState } from "react";
 import api from "../../http/api";
 import { useDisciplinas } from "../../hooks/useDisciplinas";
+import { useTurmas } from "../../hooks/useTurmas";
+import { useSeries } from "../../hooks/useSeries";
+import { useDias } from "../../hooks/useDias";
+import { useHoraAulas } from "../../hooks/useHoraAulas";
 
 const Register = () => {
-  const { disciplinas, loading, error } = useDisciplinas();
-
+  const { disciplinas } = useDisciplinas();
+  const { turmas } = useTurmas()
+  const { series } = useSeries()
+  const { dias } = useDias()
+  const { horaAulas } = useHoraAulas()
 
   const [usuario, setUsuario] = useState("");
   const [email, setEmail] = useState("");
@@ -15,12 +22,6 @@ const Register = () => {
   const [serie, setSerie] = useState("");
   const [horaAula, setHoraAula] = useState("");
   const [dia, setDia] = useState("");
-
-  const [turmas, setTurmas] = useState([]);
-  const [series, setSeries] = useState([]);
-  const [horaAulas, setHoraAulas] = useState([]);
-  const [dias, setDias] = useState([]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
